@@ -1,0 +1,25 @@
+{
+  "name": "elm-templates",
+  "version": "0.1.0",
+  "description": "Elm templates",
+  "main": "",
+  "scripts": {
+    "start": "NODE_ENV=production node src/server/index.js",
+    "dev": "NODE_ENV=development node src/server/index.js",
+    "build": "NODE_ENV=production webpack --config webpack.prod.config.js"
+  },
+  "author": "Alexander Newman",
+  "license": "BSD3",
+  "dependencies": {
+    "cors": "^2.8.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "elm-hot-loader": "^0.3.4",
+    "elm-webpack-loader": "^3.0.6",
+    "webpack": "^1.13.2",
+    "webpack-dev-middleware": "^1.8.2",
+    "webpack-hot-middleware": "^2.12.2"
+  }
+}
