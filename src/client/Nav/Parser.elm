@@ -23,7 +23,9 @@ urlParser =
 
 pathParser : Navigation.Location -> Result String Page
 pathParser location =
-    UrlParser.parse identity pageParser (String.dropLeft 1 location.pathname)
+    location.pathname
+        |> String.dropLeft 1
+        |> UrlParser.parse identity pageParser
 
 
 pageParser : Parser (Page -> a) a
