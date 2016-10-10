@@ -1,7 +1,7 @@
 {
     "version": "0.1.0",
     "summary": "Elm templates",
-    "repository": "https://github.com/user/elm-templates.git",
+    "repository": "https://github.com/aleshgo/elm-templates.git",
     "author": "Alexander Newman",
     "license": "BSD3",
     "source-directories": [
