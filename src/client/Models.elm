@@ -1,10 +1,16 @@
 module Models exposing (..)
 
+import Nav.Models exposing (Page(..))
+
 
 type alias Model =
-    String
+    { page : Page
+    , pageId : Int
+    }
 
 
 initialModel : Model
 initialModel =
-    "Hello World"
+    { page = Home
+    , pageId = 0
+    }

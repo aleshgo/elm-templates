@@ -2,4 +2,5 @@ module Messages exposing (..)
 
 
 type Msg
-    = NoOp
+    = GoHomePage
+    | GoToPage Int
