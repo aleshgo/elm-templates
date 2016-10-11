@@ -22,7 +22,7 @@ localeSwitcher model =
 
 localeSwitcherOption model locale =
     option
-        [ value locale
-        , selected (locale == model.locale)
+        [ value locale.id
+        , selected (locale.id == model.locale)
         ]
-        [ text locale ]
+        [ text locale.label ]

@@ -9,7 +9,7 @@ type alias Locale =
 
 type alias Model =
     { locale : String
-    , localesList : List String
+    , localesList : List Locale
     }
 
 
@@ -25,5 +25,5 @@ initLocale =
 initialModel : Model
 initialModel =
     { locale = ""
-    , localesList = [ "ru", "en" ]
+    , localesList = initLocale
     }
