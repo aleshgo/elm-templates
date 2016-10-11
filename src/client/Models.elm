@@ -1,10 +1,29 @@
 module Models exposing (..)
 
 
+type alias Locale =
+    { id : String
+    , label : String
+    }
+
+
 type alias Model =
-    String
+    { locale : String
+    , localesList : List String
+    }
+
+
+initLocale : List Locale
+initLocale =
+    [ Locale "en"
+        "English"
+    , Locale "ru"
+        "Русский"
+    ]
 
 
 initialModel : Model
 initialModel =
-    "Hello World"
+    { locale = ""
+    , localesList = [ "ru", "en" ]
+    }
