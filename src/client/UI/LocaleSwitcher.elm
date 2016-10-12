@@ -5,6 +5,7 @@ import Html.Attributes exposing (value, selected)
 import Messages exposing (Msg(..))
 import Models exposing (..)
 import Events exposing (onSelect)
+import I18n.Locale as Locale
 
 
 localeSwitcher : Model -> Html Msg
@@ -22,7 +23,7 @@ localeSwitcher model =
 
 localeSwitcherOption model locale =
     option
-        [ value locale.id
-        , selected (locale.id == model.locale)
+        [ value <| Locale.toCode locale
+        , selected (locale == model.locale)
         ]
-        [ text locale.label ]
+        [ text <| Locale.toName locale ]

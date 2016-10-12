@@ -1,29 +1,21 @@
 module Models exposing (..)
 
-
-type alias Locale =
-    { id : String
-    , label : String
-    }
+import I18n.Model exposing (Locale(..))
 
 
 type alias Model =
-    { locale : String
+    { locale : Locale
     , localesList : List Locale
     }
 
 
 initLocale : List Locale
 initLocale =
-    [ Locale "en"
-        "English"
-    , Locale "ru"
-        "Русский"
-    ]
+    [ En, Ru ]
 
 
 initialModel : Model
 initialModel =
-    { locale = ""
+    { locale = En
     , localesList = initLocale
     }
