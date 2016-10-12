@@ -6,16 +6,14 @@ import Messages exposing (Msg(..))
 import Models exposing (..)
 import UI.LocaleSwitcher exposing (localeSwitcher)
 import I18n.Locale as Locale
-
-
-hello_world =
-    "Hello World"
+import I18n.Model exposing (Locale(..))
+import I18n.LocaleData exposing (translate, TranslationId(..))
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ div [] [ text hello_world ]
+        [ div [] [ text <| translate model.locale HelloWorld ]
         , text ("Browser language: " ++ Locale.toName model.locale)
         , localeSwitcher model
         ]
