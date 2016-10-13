@@ -1,6 +1,6 @@
 module I18n.Locale exposing (..)
 
-import I18n.Model exposing (Locale(..))
+import I18n.Models exposing (Locale(..))
 import String
 
 

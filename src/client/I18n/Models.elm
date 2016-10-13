@@ -1,4 +1,4 @@
-module I18n.Model exposing (..)
+module I18n.Models exposing (..)
 
 
 type Locale

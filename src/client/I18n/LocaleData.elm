@@ -1,6 +1,6 @@
 module I18n.LocaleData exposing (..)
 
-import I18n.Model exposing (Locale(..), LocaleSet)
+import I18n.Models exposing (Locale(..), LocaleSet)
 
 
 type TranslationId

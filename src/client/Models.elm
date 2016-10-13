@@ -1,6 +1,6 @@
 module Models exposing (..)
 
-import I18n.Model exposing (Locale(..))
+import I18n.Models exposing (Locale(..))
 
 
 type alias Model =
