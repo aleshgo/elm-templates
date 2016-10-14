@@ -6,6 +6,8 @@ const path = require('path');
 
 const cors = require('cors');
 const app = express();
+const bodyparser = require('body-parser');
+const response = require('./response');
 
 app.use(cors());
 if (process.env.NODE_ENV === 'development') {
@@ -18,6 +20,14 @@ if (process.env.NODE_ENV === 'development') {
   }));
   app.use(require('webpack-hot-middleware')(compiler));
 }
+
+app.use(bodyparser.json());
+app.use(response());
+
+// Load routers
+const usersRouter = express.Router();
+require('./routes/users')(usersRouter);
+app.use('/api', usersRouter);
 
 app.use('/', express.static(path.join(__dirname, '../..', 'static')));
 

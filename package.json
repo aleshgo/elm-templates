@@ -11,9 +11,13 @@
   "author": "Alexander Newman",
   "license": "BSD3",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "dotenv": "^2.0.0",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "joi": "^9.1.1",
+    "jsonfile": "^2.4.0",
+    "lodash": "^4.16.4"
   },
   "devDependencies": {
     "elm-hot-loader": "^0.3.4",
