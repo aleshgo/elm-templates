@@ -11,9 +11,11 @@
   "author": "Alexander Newman",
   "license": "BSD3",
   "dependencies": {
+    "base64url": "^2.0.0",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "dotenv": "^2.0.0",
+    "elliptic": "^6.3.2",
     "express": "^4.14.0",
     "joi": "^9.1.1",
     "jsonfile": "^2.4.0",
