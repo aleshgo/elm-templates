@@ -6,7 +6,8 @@ const WT = require('../utils/webtoken')
 
 module.exports = function(router) {
   router.post('/users', validate(register_schema), function(req, res) {
-    var file = process.env.DATA_FILE;
+    const file = process.env.DATA_FILE;
+    const tokenExp = process.env.TOKEN_EXP;
 
     // read data
     jsonfile.readFile(file, function(err, users) {
@@ -33,7 +34,7 @@ module.exports = function(router) {
         if(err) {
           return res.serverError(err);
         }
-        return res.created({ TOKEN: WT.sign({ username: profile.username }, profile.privateKey) });
+        return res.created({ TOKEN: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
       });
     });
   });

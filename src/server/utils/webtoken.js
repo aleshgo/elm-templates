@@ -21,7 +21,8 @@ WebToken.genKeyPair = function() {
   }
 }
 
-WebToken.sign = function(payload, privateKey) {
+WebToken.sign = function(payload, privateKey, exp) {
+  payload['exp'] = Date.now()+exp*1000;
   const input = normalizeInput(payload);
   const key = ec.keyFromPrivate(privateKey, 'hex');
   const signature = key.sign(input);
