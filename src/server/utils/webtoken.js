@@ -35,6 +35,19 @@ WebToken.verify = function(wt, publicKey) {
   const key = ec.keyFromPublic(publicKey, 'hex');
   const { payload, signature } = decode(wt);
 
+  const output = denormalizeInput(payload);
+  const now = Date.now();
+  const iat = denormalizeInput(payload)['iat'];
+  const exp = denormalizeInput(payload)['exp'];
+
+  if( exp < now ) {
+    throw "WebToken: timeout";
+  }
+
+  if( exp < iat ) {
+    throw "WebToken: iat can't be more than exp";
+  }
+
   key.verify(payload, signature);
 }
 
