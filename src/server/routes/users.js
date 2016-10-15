@@ -1,13 +1,15 @@
 const jsonfile = require('jsonfile')
-const register_schema = require('../validation/register')
+const user_schema = require('../validation/user')
 const validate = require('../validate');
 const _ = require('lodash');
 const WT = require('../utils/webtoken')
 
 module.exports = function(router) {
-  router.post('/users', validate(register_schema), function(req, res) {
-    const file = process.env.DATA_FILE;
-    const tokenExp = process.env.TOKEN_EXP;
+
+  const file = process.env.DATA_FILE;
+  const tokenExp = process.env.TOKEN_EXP;
+
+  router.post('/users', validate(user_schema), function(req, res) {
 
     // read data
     jsonfile.readFile(file, function(err, users) {
@@ -38,4 +40,23 @@ module.exports = function(router) {
       });
     });
   });
+
+  router.post('/sessions/create', validate(user_schema), function(req, res) {
+    // read data
+
+    jsonfile.readFile(file, function(err, users) {
+      if(err) {
+        return res.serverError(err);
+      }
+
+      const profile = _.find(users, { username: req.body.username });
+      if(!profile || profile.password !== req.body.password) {
+        return res.badRequest({ username: "\"username\" don't match",
+                                password: "\"password\" don't match"});
+      }
+
+      return res.ok({ TOKEN: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
+    });
+  });
+
 }
