@@ -3,6 +3,7 @@ const user_schema = require('../validation/user')
 const validate = require('../validate');
 const _ = require('lodash');
 const WT = require('../utils/webtoken')
+const isAuthenticated = require('../utils/auth').isAuthenticated;
 
 module.exports = function(router) {
 
@@ -42,8 +43,8 @@ module.exports = function(router) {
   });
 
   router.post('/sessions/create', validate(user_schema), function(req, res) {
-    // read data
 
+    // read data
     jsonfile.readFile(file, function(err, users) {
       if(err) {
         return res.serverError(err);
@@ -57,6 +58,10 @@ module.exports = function(router) {
 
       return res.ok({ TOKEN: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
     });
+  });
+
+  router.get('/sessions/test', isAuthenticated(file), function(req, res) {
+    return res.ok();
   });
 
 }

@@ -21,12 +21,12 @@ module.exports = function() {
       return res.json(_.assign(obj, meta(false, res.statusCode)));
     }
 
-    res.unauthorzed = function(obj) {
+    res.unauthorzed = function() {
       res.status(401);
       return res.json(meta(false, res.statusCode));
     }
 
-    res.forbidden = function(obj) {
+    res.forbidden = function() {
       res.status(403);
       return res.json(meta(false, res.statusCode));
     }
