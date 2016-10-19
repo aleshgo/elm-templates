@@ -1,5 +1,7 @@
 module Messages exposing (..)
 
+import Auth.Messages
+
 
 type Msg
-    = NoOp
+    = AuthMsg Auth.Messages.Msg

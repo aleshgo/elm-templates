@@ -1,10 +1,14 @@
 module Models exposing (..)
 
+import Auth.Models
+
 
 type alias Model =
-    String
+    { auth : Auth.Models.Model
+    }
 
 
 initialModel : Model
 initialModel =
-    "Hello World"
+    { auth = Auth.Models.init
+    }

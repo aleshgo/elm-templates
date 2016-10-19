@@ -37,7 +37,7 @@ module.exports = function(router) {
         if(err) {
           return res.serverError(err);
         }
-        return res.created({ TOKEN: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
+        return res.created({ token: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
       });
     });
   });
@@ -56,7 +56,7 @@ module.exports = function(router) {
                                 password: "\"password\" don't match"});
       }
 
-      return res.ok({ TOKEN: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
+      return res.ok({ token: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
     });
   });
 
