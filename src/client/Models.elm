@@ -1,10 +1,14 @@
 module Models exposing (..)
 
+import Alert.Models
+
 
 type alias Model =
-    String
+    { alert : Alert.Models.Model
+    }
 
 
 initialModel : Model
 initialModel =
-    "Hello World"
+    { alert = Alert.Models.init
+    }
