@@ -15,8 +15,19 @@ type alias Model =
     , password : String
     , remember : Bool
     , token : String
+    , iat : Int
+    , exp : Int
     , view : Views
     }
+
+
+init : Model
+init =
+    Model "" "" False "" 0 0 Login
+
+
+
+-- TokenPayload Decoder
 
 
 type alias TokenPayload =
@@ -24,11 +35,6 @@ type alias TokenPayload =
     , iat : Int
     , exp : Int
     }
-
-
-init : Model
-init =
-    Model "" "" False "" Login
 
 
 tokenPayloadDecoder : Decode.Decoder TokenPayload
@@ -56,7 +62,7 @@ decodeTokenPayloadString payload =
             payload
 
         Err _ ->
-            TokenPayload "username" 0 0
+            TokenPayload "" 0 0
 
 
 decodeTokenPayload : String -> TokenPayload
@@ -66,4 +72,4 @@ decodeTokenPayload token =
             decodeTokenPayloadString <| base64Decode encodedPayload
 
         Nothing ->
-            TokenPayload "username" 0 0
+            TokenPayload "" 0 0

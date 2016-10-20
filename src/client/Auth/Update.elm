@@ -3,14 +3,18 @@ module Auth.Update exposing (..)
 import Auth.Messages exposing (Msg(..))
 import Auth.Models exposing (Model, Views(..), decodeTokenPayload)
 import Auth.Commands exposing (postUserCmd, loginUrl)
-import Auth.Ports exposing (saveToken)
+import Auth.Ports exposing (saveToken, removeToken)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ToView view ->
-            { model | view = view, remember = False } ! []
+            let
+                _ =
+                    Debug.log "Switch view" model
+            in
+                { model | view = view, remember = False } ! []
 
         SetUsername username ->
             { model | username = username } ! []
@@ -40,7 +44,7 @@ update msg model =
                 _ =
                     Debug.log "ClickLogOut" model
             in
-                model ! []
+                Auth.Models.init ! [ removeToken model.token ]
 
         HttpError _ ->
             let
@@ -60,12 +64,30 @@ update msg model =
             let
                 _ =
                     Debug.log "GetTokenSuccess" token
+
+                decodedToken =
+                    decodeTokenPayload token
             in
-                { model | token = token, password = "" } ! [ saveToken token ]
+                { model
+                    | token = token
+                    , password = ""
+                    , iat = decodedToken.iat
+                    , exp = decodedToken.exp
+                }
+                    ! [ saveToken token ]
 
         LoadToken token ->
             let
                 _ =
                     Debug.log "LoadToken" token
+
+                decodedToken =
+                    decodeTokenPayload token
             in
-                { model | token = token, username = .username <| decodeTokenPayload token } ! []
+                { model
+                    | token = token
+                    , username = decodedToken.username
+                    , iat = decodedToken.iat
+                    , exp = decodedToken.exp
+                }
+                    ! []

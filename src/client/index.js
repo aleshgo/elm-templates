@@ -9,7 +9,7 @@ var mountNode = document.getElementById('main');
 
 var app = Elm.Main.embed(mountNode);
 
-app.ports.loadToken.send(localStorage.getItem('TOKEN'));
+app.ports.loadToken.send(localStorage.getItem('TOKEN') || "");
 
 app.ports.saveToken.subscribe(function(value) {
     localStorage.setItem('TOKEN', value);
