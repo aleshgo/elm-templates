@@ -11,9 +11,15 @@
   "author": "Alexander Newman",
   "license": "BSD3",
   "dependencies": {
+    "ace-css": "^1.1.0",
     "cors": "^2.8.1",
+    "css-loader": "^0.25.0",
     "dotenv": "^2.0.0",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "file-loader": "^0.9.0",
+    "font-awesome": "^4.6.3",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "elm-hot-loader": "^0.3.4",
