@@ -1,0 +1,59 @@
+.alert {
+  width : 300px;
+  margin : 5px auto 0 auto;
+  padding : 10px 10px 10px 10px;
+  box-shadow : 0 0 12px #999;
+  border-radius : 4px;
+  color : #FFF;
+  opacity : 0.8;
+  cursor : pointer;
+}
+
+.alert-success {
+  background-color : #417A38;
+}
+
+.alert-info {
+  background-color : #38477A;
+}
+
+.alert-warning {
+  background-color : #9da527;
+}
+
+.alert-error {
+  background-color : #a52e27;
+}
+
+
+.alert-top-left {
+  top : 5px;
+  left : 10px;
+}
+
+.alert-top-right {
+  top : 5px;
+  right : 10px;
+}
+
+.alert-top-full {
+  top : 5px;
+  left : 10px;
+  right : 10px
+}
+
+.alert-bottom-left {
+  bottom : 10px;
+  left : 10px;
+}
+
+.alert-bottom-right {
+  bottom : 10px;
+  right : 10px;
+}
+
+.alert-bottom-full {
+  bottom : 10px;
+  left : 10px;
+  right : 10px
+}

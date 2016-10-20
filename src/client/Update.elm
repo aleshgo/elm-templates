@@ -11,6 +11,27 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
+        SetAlertMessageTitle title ->
+            let
+                alertMessage =
+                    model.alertMessage
+            in
+                ( { model | alertMessage = { alertMessage | title = title } }, Cmd.none )
+
+        SetAlertMessageText text ->
+            let
+                alertMessage =
+                    model.alertMessage
+            in
+                ( { model | alertMessage = { alertMessage | text = text } }, Cmd.none )
+
+        SetAlertMessageType type' ->
+            let
+                alertMessage =
+                    model.alertMessage
+            in
+                ( { model | alertMessage = { alertMessage | type' = type' } }, Cmd.none )
+
         AlertMsg alertMsg ->
             let
                 ( updatedAlert, cmd ) =
