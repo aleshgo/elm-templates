@@ -21,6 +21,11 @@ type AlertPosition
     | BottomFull
 
 
+type AlertStatus
+    = Idle
+    | Hovered
+
+
 alertTypeToStyle : AlertType -> String
 alertTypeToStyle type' =
     case type' of
@@ -86,6 +91,16 @@ type alias AlertMessage =
     , type' : AlertType
     , title : String
     , text : String
+    , status : AlertStatus
+    }
+
+
+type alias AlertOptions =
+    { timeOut : Float
+    , newestOnTop : Bool
+    , progressBar : Bool
+    , preventDuplicates : Bool
+    , closeButton : Bool
     }
 
 
@@ -93,9 +108,17 @@ type alias Model =
     { queue : List AlertMessage
     , time : Float
     , position : AlertPosition
-    , timeOut : Float
-    , newestOnTop : Bool
+    , options : AlertOptions
     }
+
+
+defaultAlertOptions : AlertOptions
+defaultAlertOptions =
+    AlertOptions 50000 True False True True
+
+
+defaultAlertMessage =
+    AlertMessage 0 Success "" "" Idle
 
 
 init : Model
@@ -104,5 +127,4 @@ init =
         []
         0
         TopRight
-        50000
-        True
+        defaultAlertOptions

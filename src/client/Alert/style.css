@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.alert-hovered {
+  opacity : 1;
+}
+
 .alert-success {
   background-color : #417A38;
 }

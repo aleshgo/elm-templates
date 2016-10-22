@@ -2,8 +2,9 @@ module Alert.View exposing (..)
 
 import Html exposing (Html, text, div, i)
 import Html.Attributes exposing (class, style, property)
+import Html.Events exposing (onClick, onMouseEnter, onMouseLeave)
 import Json.Encode exposing (string)
-import Alert.Models exposing (Model, AlertMessage, AlertPosition(..), alertTypeToStyle, alertTypeToIcon, alertPositionToStyle)
+import Alert.Models exposing (Model, AlertMessage, AlertPosition(..), AlertStatus(..), alertTypeToStyle, alertTypeToIcon, alertPositionToStyle)
 import Alert.Messages exposing (Msg(..))
 
 
@@ -18,7 +19,7 @@ viewAlert model =
             ]
         ]
         (List.map (viewAlertMessage model)
-            (if model.newestOnTop then
+            (if model.options.newestOnTop then
                 model.queue
              else
                 List.reverse model.queue
@@ -37,6 +38,14 @@ viewAlertMessage model message =
                     else
                         ""
                    )
+                ++ (if message.status == Hovered then
+                        " alert-hovered"
+                    else
+                        ""
+                   )
+        , onMouseEnter (MouseEnterAlertMessage message.id)
+        , onMouseLeave (MouseLeaveAlertMessage message.id)
+        , onClick (MouseClickAlertMessage message.id)
         ]
         [ div [ class "m1 h2" ] [ i [ class <| "fa " ++ (alertTypeToIcon message.type') ] [] ]
         , div [ class "m1" ]
