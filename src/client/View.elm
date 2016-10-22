@@ -35,25 +35,47 @@ viewPanel model =
         , div [ class "flex flex-column flex-auto p2 fit col-12" ]
             [ label [ class "label" ] [ text "Type" ]
             , fieldset [ class "fieldset" ]
-                [ radio "AlertType" (SetAlertMessageType Success) "Success" True
-                , radio "AlertType" (SetAlertMessageType Info) "Info" False
-                , radio "AlertType" (SetAlertMessageType Warning) "Warning" False
-                , radio "AlertType" (SetAlertMessageType Error) "Error" False
-                ]
+                (let
+                    alertTypeList =
+                        [ Success, Info, Warning, Error ]
+                 in
+                    List.map (alertTypeRadio model) alertTypeList
+                )
             , label [ class "label mt1" ] [ text "Position" ]
             , fieldset [ class "fieldset" ]
-                [ radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition TopLeft) "Top Left" True
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition TopCenter) "Top Center" False
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition TopRight) "Top Right" False
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition TopFull) "Top Full" False
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition BottomLeft) "Bottom Left" False
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition BottomCenter) "Bottom Center" False
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition BottomRight) "Bottom Right" False
-                , radio "AlertPosition" (AlertMsg <| Alert.Messages.SetAlertPosition BottomFull) "Bottom Full" False
-                ]
+                (let
+                    alertPositionList =
+                        [ TopLeft, TopCenter, TopRight, TopFull, BottomLeft, BottomCenter, BottomRight, BottomFull ]
+                 in
+                    List.map (alertPositionRadio model) alertPositionList
+                )
             ]
         , div [ class "flex flex-column flex-auto p2 fit col-12" ] []
         ]
+
+
+alertPositionRadio : Model -> AlertPosition -> Html Msg
+alertPositionRadio model position =
+    radio "AlertPosition"
+        (AlertMsg <| Alert.Messages.SetAlertPosition position)
+        (toString position)
+        (if model.alert.position == position then
+            True
+         else
+            False
+        )
+
+
+alertTypeRadio : Model -> AlertType -> Html Msg
+alertTypeRadio model type' =
+    radio "AlertType"
+        (SetAlertMessageType type')
+        (toString type')
+        (if model.alertMessage.type' == type' then
+            True
+         else
+            False
+        )
 
 
 radio : String -> msg -> String -> Bool -> Html msg

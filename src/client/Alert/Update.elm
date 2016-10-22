@@ -11,7 +11,7 @@ update msg model =
             model ! []
 
         Tick time ->
-            { model | queue = (List.filter (\q -> time - q.id < 50000) model.queue), time = time } ! []
+            { model | queue = (List.filter (\q -> time - q.id < model.timeOut) model.queue), time = time } ! []
 
         SetAlertPosition position ->
             { model | position = position } ! []

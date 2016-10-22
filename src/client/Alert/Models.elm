@@ -60,7 +60,7 @@ alertPositionToStyle position =
             "alert-top-left"
 
         TopCenter ->
-            "alert-top-full"
+            "alert-top-center"
 
         TopRight ->
             "alert-top-right"
@@ -72,7 +72,7 @@ alertPositionToStyle position =
             "alert-bottom-left"
 
         BottomCenter ->
-            "alert-bottom-full"
+            "alert-bottom-center"
 
         BottomRight ->
             "alert-bottom-right"
@@ -93,6 +93,8 @@ type alias Model =
     { queue : List AlertMessage
     , time : Float
     , position : AlertPosition
+    , timeOut : Float
+    , newestOnTop : Bool
     }
 
 
@@ -102,3 +104,5 @@ init =
         []
         0
         TopRight
+        50000
+        True

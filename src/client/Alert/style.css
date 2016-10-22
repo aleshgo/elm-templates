@@ -7,6 +7,11 @@
   color : #FFF;
   opacity : 0.8;
   cursor : pointer;
+  pointer-events: auto;
+}
+
+.alert-full {
+  width: 100%;
 }
 
 .alert-success {
@@ -31,6 +36,12 @@
   left : 10px;
 }
 
+.alert-top-center {
+  top : 5px;
+  left : 10px;
+  right : 10px
+}
+
 .alert-top-right {
   top : 5px;
   right : 10px;
@@ -45,6 +56,12 @@
 .alert-bottom-left {
   bottom : 10px;
   left : 10px;
+}
+
+.alert-bottom-center {
+  bottom : 10px;
+  left : 10px;
+  right : 10px
 }
 
 .alert-bottom-right {

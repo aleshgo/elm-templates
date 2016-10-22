@@ -17,13 +17,27 @@ viewAlert model =
             , ( "pointer-events", "none" )
             ]
         ]
-        (List.map viewAlertMessage model.queue)
+        (List.map (viewAlertMessage model)
+            (if model.newestOnTop then
+                model.queue
+             else
+                List.reverse model.queue
+            )
+        )
 
 
-viewAlertMessage : AlertMessage -> Html Msg
-viewAlertMessage message =
+viewAlertMessage : Model -> AlertMessage -> Html Msg
+viewAlertMessage model message =
     div
-        [ class <| "flex items-center alert " ++ (alertTypeToStyle message.type') ]
+        [ class <|
+            "flex items-center alert "
+                ++ (alertTypeToStyle message.type')
+                ++ (if model.position == TopFull || model.position == BottomFull then
+                        " alert-full"
+                    else
+                        ""
+                   )
+        ]
         [ div [ class "m1 h2" ] [ i [ class <| "fa " ++ (alertTypeToIcon message.type') ] [] ]
         , div [ class "m1" ]
             [ div [ class "h4" ] [ text message.title ]
