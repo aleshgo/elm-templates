@@ -14,7 +14,7 @@ viewAlert model =
         [ class <| "fixed bottom-0 overflow-hidden " ++ (alertPositionToStyle model.position)
         , style
             [ ( "max-height", "100%" )
-            , ( "z-index", "999999999" )
+            , ( "z-index", "999999" )
             , ( "pointer-events", "none" )
             ]
         ]
@@ -33,25 +33,26 @@ viewAlertMessage model message =
         [ class <|
             "relative flex items-center alert "
                 ++ (alertTypeToStyle message.type')
-                ++ (if model.position == TopFull || model.position == BottomFull then
-                        " alert-full"
-                    else
-                        ""
-                   )
                 ++ (if message.status == Hovered then
                         " alert-hovered"
                     else
                         ""
                    )
+        , style
+            [ ( "pointer-events", "auto" )
+            , if model.position == TopFull || model.position == BottomFull then
+                ( "width", "100%" )
+              else
+                ( "", "" )
+            ]
         , onMouseEnter (MouseEnterAlertMessage message.id)
         , onMouseLeave (MouseLeaveAlertMessage message.id)
         , onClick (MouseClickAlertMessage message.id)
         ]
-        [ div [ class "m1 h2" ] [ i [ class <| "fa " ++ (alertTypeToIcon message.type') ] [] ]
+        [ div [ class "alert-icon" ] [ i [ class <| "fa " ++ (alertTypeToIcon message.type') ] [] ]
         , div [ class "m1" ]
-            [ div [ class "h4" ] [ text message.title ]
-            , div [ class "h6", property "innerHTML" <| string message.text ] []
-            , div [] [ text <| toString message.id ]
+            [ div [ class "alert-title" ] [ text message.title ]
+            , div [ class "alert-text", property "innerHTML" <| string message.text ] []
             ]
         , (if model.options.progressBar then
             viewProgressBar model message
@@ -68,9 +69,13 @@ viewAlertMessage model message =
 
 viewProgressBar : Model -> AlertMessage -> Html Msg
 viewProgressBar model message =
-    div [ class "alert-progress-bar", style [ ( "width", (toString ((((message.id + model.options.timeOut) - model.time) / model.options.timeOut) * 100) ++ "%") ) ] ] []
+    let
+        progressBarWidth =
+            toString ((((message.id + model.options.timeOut) - model.time) / model.options.timeOut) * 100) ++ "%"
+    in
+        div [ class "absolute alert-progress-bar", style [ ( "width", progressBarWidth ) ] ] []
 
 
 viewCloseButton : Html Msg
 viewCloseButton =
-    div [ class "alert-close-button" ] [ i [ class "fa fa-times" ] [] ]
+    div [ class "absolute alert-close-button" ] [ i [ class "fa fa-times" ] [] ]

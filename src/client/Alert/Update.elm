@@ -7,39 +7,44 @@ import Alert.Models exposing (Model, AlertMessage, AlertStatus(..))
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            model ! []
-
         Tick time ->
-            { model | queue = (List.filter (\q -> time - q.id < model.options.timeOut) model.queue), time = time } ! []
-
-        AddAlertMessage alertMessage ->
             let
-                dublicate : List AlertMessage
-                dublicate =
+                queue : List AlertMessage
+                queue =
+                    (List.filter (\m -> (model.time - m.id) < model.options.timeOut) model.queue)
+            in
+                { model | queue = queue, time = time } ! []
+
+        AddAlertMessage type' title text ->
+            let
+                isDuplicate : AlertMessage -> Bool
+                isDuplicate m =
+                    m.title == title && m.text == text && m.type' == type'
+
+                duplicates : List AlertMessage
+                duplicates =
                     if model.options.preventDuplicates then
-                        List.filter
-                            (\q ->
-                                q.title
-                                    == alertMessage.title
-                                    && q.text
-                                    == alertMessage.text
-                                    && q.type'
-                                    == alertMessage.type'
-                            )
-                            model.queue
+                        List.filter isDuplicate model.queue
                     else
                         []
 
+                newAlertMessage : AlertMessage
+                newAlertMessage =
+                    AlertMessage model.time type' title text Idle
+
                 queue : List AlertMessage
                 queue =
-                    if model.options.preventDuplicates then
-                        if List.length dublicate > 0 then
+                    if model.options.preventDuplicates && List.length duplicates > 0 then
+                        List.map
+                            (\m ->
+                                if isDuplicate m then
+                                    { m | id = model.time }
+                                else
+                                    m
+                            )
                             model.queue
-                        else
-                            { alertMessage | id = model.time } :: model.queue
                     else
-                        { alertMessage | id = model.time } :: model.queue
+                        newAlertMessage :: model.queue
             in
                 { model | queue = queue } ! []
 

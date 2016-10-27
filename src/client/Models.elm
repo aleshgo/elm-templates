@@ -1,16 +1,20 @@
 module Models exposing (..)
 
-import Alert.Models exposing (AlertMessage, AlertType(..), initAlertMessage)
+import Alert.Models exposing (AlertMessage, AlertPosition(..), AlertType(..), AlertOptions)
 
 
 type alias Model =
     { alert : Alert.Models.Model
-    , alertMessage : AlertMessage
+    , newAlertMessageTitle : String
+    , newAlertMessageText : String
+    , newAlertMessageType : AlertType
     }
 
 
 initialModel : Model
 initialModel =
-    { alert = Alert.Models.init
-    , alertMessage = initAlertMessage
+    { alert = Alert.Models.init TopRight (AlertOptions 5000 True True True True)
+    , newAlertMessageTitle = ""
+    , newAlertMessageText = ""
+    , newAlertMessageType = Success
     }

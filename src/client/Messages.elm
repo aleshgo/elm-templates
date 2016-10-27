@@ -5,11 +5,10 @@ import Alert.Models exposing (AlertType, AlertPosition)
 
 
 type Msg
-    = NoOp
-    | AlertMsg Alert.Messages.Msg
-    | SetAlertMessageTitle String
-    | SetAlertMessageText String
-    | SetAlertMessageType AlertType
+    = AlertMsg Alert.Messages.Msg
+    | SetNewAlertMessageTitle String
+    | SetNewAlertMessageText String
+    | SetNewAlertMessageType AlertType
     | SetAlertPosition AlertPosition
     | SetTimeOut String
     | ToggleNewestOnTop

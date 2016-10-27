@@ -27,9 +27,9 @@ viewPanel model =
     div [ class "bg-silver border border-gray rounded p2 flex flex-auto" ]
         [ div [ class "flex flex-column flex-auto p2 fit col-12" ]
             [ label [ class "label" ] [ text "Title" ]
-            , input [ class "input", type' "text", onInput SetAlertMessageTitle ] []
+            , input [ class "input", type' "text", onInput SetNewAlertMessageTitle ] []
             , label [ class "label" ] [ text "Text" ]
-            , textarea [ class "textarea", onInput SetAlertMessageText ] []
+            , textarea [ class "textarea", onInput SetNewAlertMessageText ] []
             , label [ class "label" ] [ text "Options" ]
             , fieldset [ class "fieldset" ]
                 [ checkbox ToggleNewestOnTop "Newest on top" (model.alert.options.newestOnTop == True)
@@ -38,7 +38,7 @@ viewPanel model =
                 , checkbox ToggleCloseButton "Show close button" (model.alert.options.closeButton == True)
                 , input [ class "input", type' "text", onInput SetTimeOut, value <| toString model.alert.options.timeOut ] []
                 ]
-            , button [ class "mt2 btn btn-primary", onClick <| AlertMsg <| Alert.Messages.AddAlertMessage model.alertMessage ] [ text "Show Alert" ]
+            , button [ class "mt2 btn btn-primary", onClick <| AlertMsg <| Alert.Messages.AddAlertMessage model.newAlertMessageType model.newAlertMessageTitle model.newAlertMessageText ] [ text "Show Alert" ]
             ]
         , div [ class "flex flex-column flex-auto p2 fit col-12" ]
             [ label [ class "label" ] [ text "Type" ]
@@ -77,9 +77,9 @@ alertPositionRadio model position =
 alertTypeRadio : Model -> AlertType -> Html Msg
 alertTypeRadio model type' =
     radio "AlertType"
-        (SetAlertMessageType type')
+        (SetNewAlertMessageType type')
         (toString type')
-        (if model.alertMessage.type' == type' then
+        (if model.newAlertMessageType == type' then
             True
          else
             False

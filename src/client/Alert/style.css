@@ -4,14 +4,27 @@
   padding : 10px 10px 10px 10px;
   box-shadow : 0 0 12px #999;
   border-radius : 4px;
-  color : #FFF;
   opacity : 0.8;
   cursor : pointer;
-  pointer-events: auto;
+}
+
+.alert-icon {
+  color : #FFF;
+  margin : 0.5rem;
+  font-size : 1.5rem;
+}
+
+.alert-title {
+  font-size : 1rem;
+  color : #FFF;
+}
+
+.alert-text {
+  font-size : 0.75rem;
+  color : #FFF;
 }
 
 .alert-progress-bar {
-  position: absolute;
   bottom: 0px;
   height: 5px;
   left: 0px;
@@ -20,14 +33,10 @@
 }
 
 .alert-close-button {
-  position: absolute;
   top : 3px;
   right : 5px;
-  color : black;
-}
+  color : #FFF;
 
-.alert-full {
-  width: 100%;
 }
 
 .alert-hovered {

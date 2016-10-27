@@ -112,20 +112,6 @@ type alias Model =
     }
 
 
-initAlertOptions : AlertOptions
-initAlertOptions =
-    AlertOptions 50000 True False True True
-
-
-initAlertMessage : AlertMessage
-initAlertMessage =
-    AlertMessage 0 Success "" "" Idle
-
-
-init : Model
-init =
-    Model
-        []
-        0
-        TopRight
-        initAlertOptions
+init : AlertPosition -> AlertOptions -> Model
+init position options =
+    Model [] 0 position options

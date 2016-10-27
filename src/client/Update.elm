@@ -10,29 +10,14 @@ import String
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
+        SetNewAlertMessageTitle title ->
+            { model | newAlertMessageTitle = title } ! []
 
-        SetAlertMessageTitle title ->
-            let
-                alertMessage =
-                    model.alertMessage
-            in
-                ( { model | alertMessage = { alertMessage | title = title } }, Cmd.none )
+        SetNewAlertMessageText text ->
+            { model | newAlertMessageText = text } ! []
 
-        SetAlertMessageText text ->
-            let
-                alertMessage =
-                    model.alertMessage
-            in
-                ( { model | alertMessage = { alertMessage | text = text } }, Cmd.none )
-
-        SetAlertMessageType type' ->
-            let
-                alertMessage =
-                    model.alertMessage
-            in
-                ( { model | alertMessage = { alertMessage | type' = type' } }, Cmd.none )
+        SetNewAlertMessageType type' ->
+            { model | newAlertMessageType = type' } ! []
 
         AlertMsg alertMsg ->
             let
