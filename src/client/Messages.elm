@@ -1,7 +1,7 @@
 module Messages exposing (..)
 
 import Alert.Messages
-import Alert.Models exposing (AlertType)
+import Alert.Models exposing (AlertType, AlertPosition)
 
 
 type Msg
@@ -10,3 +10,9 @@ type Msg
     | SetAlertMessageTitle String
     | SetAlertMessageText String
     | SetAlertMessageType AlertType
+    | SetAlertPosition AlertPosition
+    | SetTimeOut String
+    | ToggleNewestOnTop
+    | TogglePreventDuplicates
+    | ToggleProgressBar
+    | ToggleCloseButton

@@ -1,8 +1,7 @@
 module Alert.Update exposing (..)
 
 import Alert.Messages exposing (Msg(..))
-import Alert.Models exposing (Model, AlertMessage, AlertOptions, AlertType(..), AlertStatus(..))
-import String
+import Alert.Models exposing (Model, AlertMessage, AlertStatus(..))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -14,63 +13,21 @@ update msg model =
         Tick time ->
             { model | queue = (List.filter (\q -> time - q.id < model.options.timeOut) model.queue), time = time } ! []
 
-        SetAlertPosition position ->
-            { model | position = position } ! []
-
-        SetTimeOut timeOutString ->
-            let
-                options : AlertOptions
-                options =
-                    model.options
-
-                timeOut =
-                    case String.toFloat timeOutString of
-                        Ok val ->
-                            val
-
-                        Err msg ->
-                            0
-            in
-                { model | options = { options | timeOut = timeOut } } ! []
-
-        ToggleNewestOnTop ->
-            let
-                options : AlertOptions
-                options =
-                    model.options
-            in
-                { model | options = { options | newestOnTop = not model.options.newestOnTop } } ! []
-
-        TogglePreventDuplicates ->
-            let
-                options : AlertOptions
-                options =
-                    model.options
-            in
-                { model | options = { options | preventDuplicates = not model.options.preventDuplicates } } ! []
-
-        ToggleCloseButton ->
-            let
-                options : AlertOptions
-                options =
-                    model.options
-            in
-                { model | options = { options | closeButton = not model.options.closeButton } } ! []
-
-        ToggleProgressBar ->
-            let
-                options : AlertOptions
-                options =
-                    model.options
-            in
-                { model | options = { options | progressBar = not model.options.progressBar } } ! []
-
         AddAlertMessage alertMessage ->
             let
                 dublicate : List AlertMessage
                 dublicate =
                     if model.options.preventDuplicates then
-                        List.filter (\q -> q.title == alertMessage.title && q.text == alertMessage.text) model.queue
+                        List.filter
+                            (\q ->
+                                q.title
+                                    == alertMessage.title
+                                    && q.text
+                                    == alertMessage.text
+                                    && q.type'
+                                    == alertMessage.type'
+                            )
+                            model.queue
                     else
                         []
 

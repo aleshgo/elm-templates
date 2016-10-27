@@ -10,6 +10,22 @@
   pointer-events: auto;
 }
 
+.alert-progress-bar {
+  position: absolute;
+  bottom: 0px;
+  height: 5px;
+  left: 0px;
+  border-radius : 4px;
+  background-color : black;
+}
+
+.alert-close-button {
+  position: absolute;
+  top : 3px;
+  right : 5px;
+  color : black;
+}
+
 .alert-full {
   width: 100%;
 }

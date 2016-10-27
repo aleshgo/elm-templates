@@ -1,6 +1,6 @@
 module Models exposing (..)
 
-import Alert.Models exposing (AlertMessage, AlertType(..), defaultAlertMessage)
+import Alert.Models exposing (AlertMessage, AlertType(..), initAlertMessage)
 
 
 type alias Model =
@@ -12,5 +12,5 @@ type alias Model =
 initialModel : Model
 initialModel =
     { alert = Alert.Models.init
-    , alertMessage = defaultAlertMessage
+    , alertMessage = initAlertMessage
     }

@@ -32,11 +32,11 @@ viewPanel model =
             , textarea [ class "textarea", onInput SetAlertMessageText ] []
             , label [ class "label" ] [ text "Options" ]
             , fieldset [ class "fieldset" ]
-                [ checkbox (AlertMsg <| Alert.Messages.ToggleNewestOnTop) "Newest on top" (model.alert.options.newestOnTop == True)
-                , checkbox (AlertMsg <| Alert.Messages.TogglePreventDuplicates) "Prevent duplicates" (model.alert.options.preventDuplicates == True)
-                , checkbox (AlertMsg <| Alert.Messages.ToggleProgressBar) "Show progress bar" (model.alert.options.progressBar == True)
-                , checkbox (AlertMsg <| Alert.Messages.ToggleCloseButton) "Show close button" (model.alert.options.closeButton == True)
-                , input [ class "input", type' "text", onInput (AlertMsg << Alert.Messages.SetTimeOut), value <| toString model.alert.options.timeOut ] []
+                [ checkbox ToggleNewestOnTop "Newest on top" (model.alert.options.newestOnTop == True)
+                , checkbox TogglePreventDuplicates "Prevent duplicates" (model.alert.options.preventDuplicates == True)
+                , checkbox ToggleProgressBar "Show progress bar" (model.alert.options.progressBar == True)
+                , checkbox ToggleCloseButton "Show close button" (model.alert.options.closeButton == True)
+                , input [ class "input", type' "text", onInput SetTimeOut, value <| toString model.alert.options.timeOut ] []
                 ]
             , button [ class "mt2 btn btn-primary", onClick <| AlertMsg <| Alert.Messages.AddAlertMessage model.alertMessage ] [ text "Show Alert" ]
             ]
@@ -65,7 +65,7 @@ viewPanel model =
 alertPositionRadio : Model -> AlertPosition -> Html Msg
 alertPositionRadio model position =
     radio "AlertPosition"
-        (AlertMsg <| Alert.Messages.SetAlertPosition position)
+        (SetAlertPosition position)
         (toString position)
         (if model.alert.position == position then
             True

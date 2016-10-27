@@ -31,7 +31,7 @@ viewAlertMessage : Model -> AlertMessage -> Html Msg
 viewAlertMessage model message =
     div
         [ class <|
-            "flex items-center alert "
+            "relative flex items-center alert "
                 ++ (alertTypeToStyle message.type')
                 ++ (if model.position == TopFull || model.position == BottomFull then
                         " alert-full"
@@ -53,4 +53,24 @@ viewAlertMessage model message =
             , div [ class "h6", property "innerHTML" <| string message.text ] []
             , div [] [ text <| toString message.id ]
             ]
+        , (if model.options.progressBar then
+            viewProgressBar model message
+           else
+            div [] []
+          )
+        , (if model.options.closeButton then
+            viewCloseButton
+           else
+            div [] []
+          )
         ]
+
+
+viewProgressBar : Model -> AlertMessage -> Html Msg
+viewProgressBar model message =
+    div [ class "alert-progress-bar", style [ ( "width", (toString ((((message.id + model.options.timeOut) - model.time) / model.options.timeOut) * 100) ++ "%") ) ] ] []
+
+
+viewCloseButton : Html Msg
+viewCloseButton =
+    div [ class "alert-close-button" ] [ i [ class "fa fa-times" ] [] ]
