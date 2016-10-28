@@ -52,8 +52,8 @@ module.exports = function(router) {
 
       const profile = _.find(users, { username: req.body.username });
       if(!profile || profile.password !== req.body.password) {
-        return res.badRequest({ username: "\"username\" don't match",
-                                password: "\"password\" don't match"});
+        return res.badRequest({ username: "\"username\" doesn't match",
+                                password: "\"password\" doesn't match"});
       }
 
       return res.ok({ token: WT.sign({ username: profile.username }, profile.privateKey, tokenExp)});
