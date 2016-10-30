@@ -30,6 +30,10 @@ init =
 -- TokenPayload Decoder
 
 
+type alias Token =
+    String
+
+
 type alias TokenPayload =
     { username : String
     , iat : Int
@@ -45,14 +49,43 @@ tokenPayloadDecoder =
         ("exp" := Decode.int)
 
 
+fixBase64Length : String -> Result String String
+fixBase64Length s =
+    case String.length s % 4 of
+        0 ->
+            Result.Ok s
+
+        2 ->
+            Result.Ok <| String.concat [ s, "==" ]
+
+        3 ->
+            Result.Ok <| String.concat [ s, "=" ]
+
+        _ ->
+            Result.Err <| "Wrong length"
+
+
 base64Decode : String -> String
 base64Decode encodedString =
-    case Base64.decode encodedString of
-        Ok payload ->
-            String.slice 0 -1 payload
+    case fixBase64Length encodedString of
+        Ok fixedEncodedString ->
+            case Base64.decode fixedEncodedString of
+                Ok payload ->
+                    Debug.log "Base64.decode: " payload
 
-        Err _ ->
-            ""
+                Err error ->
+                    let
+                        _ =
+                            Debug.log "Base64.decode error: " error
+                    in
+                        ""
+
+        Err error ->
+            let
+                _ =
+                    Debug.log "fixBase64Length error: " error
+            in
+                ""
 
 
 decodeTokenPayloadString : String -> TokenPayload
@@ -61,11 +94,15 @@ decodeTokenPayloadString payload =
         Ok payload ->
             payload
 
-        Err _ ->
-            TokenPayload "" 0 0
+        Err error ->
+            let
+                _ =
+                    Debug.log "decodeTokenPayloadString: " error
+            in
+                TokenPayload "" 0 0
 
 
-decodeTokenPayload : String -> TokenPayload
+decodeTokenPayload : Token -> TokenPayload
 decodeTokenPayload token =
     case List.head (String.split "." token) of
         Just encodedPayload ->

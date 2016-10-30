@@ -24,9 +24,9 @@ view model =
         if loggedIn then
             div []
                 [ div [] [ text <| "Hello: " ++ model.auth.username ]
-                , div [] [ text <| "Token iat: " ++ toString (fromTime (toFloat model.auth.iat)) ]
-                , div [] [ text <| "Token exp: " ++ toString (fromTime (toFloat model.auth.exp)) ]
-                , div [] [ button [ onClick (AuthMsg Auth.Messages.ClickLogOut) ] [ text "LogOut" ] ]
+                , div [] [ text <| "Token iat: " ++ toString (fromTime <| toFloat model.auth.iat) ]
+                , div [] [ text <| "Token exp: " ++ toString (fromTime <| toFloat model.auth.exp) ]
+                , div [] [ button [ onClick <| AuthMsg Auth.Messages.ClickLogOut ] [ text "LogOut" ] ]
                 ]
         else
             Html.App.map AuthMsg (authBox model.auth)

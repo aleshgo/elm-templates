@@ -2,7 +2,7 @@ module Auth.Update exposing (..)
 
 import Auth.Messages exposing (Msg(..))
 import Auth.Models exposing (Model, Views(..), decodeTokenPayload)
-import Auth.Commands exposing (postUserCmd, loginUrl)
+import Auth.Commands exposing (postUserCmd, loginUrl, registerUrl)
 import Auth.Ports exposing (saveToken, removeToken)
 
 
@@ -37,7 +37,7 @@ update msg model =
                 _ =
                     Debug.log "ClickRegister" model
             in
-                model ! []
+                model ! [ postUserCmd model registerUrl ]
 
         ClickLogOut ->
             let
