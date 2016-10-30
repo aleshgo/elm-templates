@@ -12,6 +12,13 @@ toPath page =
         Home ->
             "/"
 
+        Login ->
+             "/login"
+
+        Users ->
+            "/users"
+
+
         Pages id ->
             "/pages/" ++ toString id
 
@@ -32,5 +39,7 @@ pageParser : Parser (Page -> a) a
 pageParser =
     oneOf
         [ format Home (s "")
+        , format Login (s "login")
+        , format Users (s "users")
         , format Pages (s "pages" </> int)
         ]

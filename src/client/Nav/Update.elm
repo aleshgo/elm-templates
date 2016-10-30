@@ -22,7 +22,19 @@ urlUpdate result model =
                     }
                         ! []
 
-                _ ->
+                Users ->
+                    { model
+                        | page = page
+                    }
+                        ! []
+
+                Login ->
+                    { model
+                        | page = page
+                    }
+                        ! []
+
+                Home ->
                     { model
                         | page = page
                     }

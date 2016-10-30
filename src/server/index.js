@@ -23,7 +23,7 @@ app.use('/', express.static(path.join(__dirname, '../..', 'static')));
 
 app.get('/*', function(req, res) {
   res.status(200).end(indexHtml);
-})
+});
 
 process.env.PORT = process.env.PORT || 3000;
 const server = app.listen(process.env.PORT, function(err) {
@@ -46,4 +46,4 @@ const indexHtml = `
       <script src="/dist/main.js"></script>
     </body>
   </html>
-`
+`;
