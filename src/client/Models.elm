@@ -1,10 +1,17 @@
 module Models exposing (..)
 
+import Nav.Models exposing (Page(..))
+import Login.Models exposing (LoginModel, SignedUser)
 
 type alias Model =
-    String
-
+    { page : Page
+    , pageId : Int
+    , login: Login.Models.LoginModel
+    }
 
 initialModel : Model
 initialModel =
-    "Hello World"
+    { page = Home
+    , pageId = 0
+    , login = LoginModel "" ( SignedUser "" ) "" ""
+    }

@@ -1,5 +1,11 @@
-module Messages exposing (..)
+module Messages exposing (Msg(..))
 
+import Login.Messages
 
 type Msg
-    = NoOp
+    = GoHomePage
+    | UsersList
+    | LoginPage
+    | GoToPage Int
+    | LogOut
+    | LoginMsg Login.Messages.Msg
