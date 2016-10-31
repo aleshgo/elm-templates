@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "start": "NODE_ENV=production node src/server/index.js",
-    "dev": "node src/server/index.js",
+    "dev": "NODE_ENV=development node src/server/index.js",
     "build": "NODE_ENV=production webpack --config webpack.prod.config.js"
   },
   "author": "Alexander Newman",
