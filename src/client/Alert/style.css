@@ -1,0 +1,105 @@
+.alert {
+  width : 300px;
+  margin : 5px auto 0 auto;
+  padding : 10px 10px 10px 10px;
+  box-shadow : 0 0 12px #999;
+  border-radius : 4px;
+  opacity : 0.8;
+  cursor : pointer;
+}
+
+.alert-icon {
+  color : #FFF;
+  margin : 0.5rem;
+  font-size : 1.5rem;
+}
+
+.alert-title {
+  font-size : 1rem;
+  color : #FFF;
+}
+
+.alert-text {
+  font-size : 0.75rem;
+  color : #FFF;
+}
+
+.alert-progress-bar {
+  bottom: 0px;
+  height: 5px;
+  left: 0px;
+  border-radius : 4px;
+  background-color : black;
+}
+
+.alert-close-button {
+  top : 3px;
+  right : 5px;
+  color : #FFF;
+
+}
+
+.alert-hovered {
+  opacity : 1;
+}
+
+.alert-success {
+  background-color : #417A38;
+}
+
+.alert-info {
+  background-color : #38477A;
+}
+
+.alert-warning {
+  background-color : #9da527;
+}
+
+.alert-error {
+  background-color : #a52e27;
+}
+
+
+.alert-top-left {
+  top : 5px;
+  left : 10px;
+}
+
+.alert-top-center {
+  top : 5px;
+  left : 10px;
+  right : 10px
+}
+
+.alert-top-right {
+  top : 5px;
+  right : 10px;
+}
+
+.alert-top-full {
+  top : 5px;
+  left : 10px;
+  right : 10px
+}
+
+.alert-bottom-left {
+  bottom : 10px;
+  left : 10px;
+}
+
+.alert-bottom-center {
+  bottom : 10px;
+  left : 10px;
+  right : 10px
+}
+
+.alert-bottom-right {
+  bottom : 10px;
+  right : 10px;
+}
+
+.alert-bottom-full {
+  bottom : 10px;
+  left : 10px;
+  right : 10px
+}
