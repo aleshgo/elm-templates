@@ -1,12 +1,12 @@
 module Auth.Update exposing (..)
 
-import Auth.Messages exposing (Msg(..))
+import Auth.Messages exposing (Msg(..), OutMsg(..))
 import Auth.Models exposing (Model, Views(..), decodeTokenPayload)
 import Auth.Commands exposing (postUserCmd, loginUrl, registerUrl)
 import Auth.Ports exposing (saveToken, removeToken)
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg, Maybe OutMsg )
 update msg model =
     case msg of
         ToView view ->
@@ -14,51 +14,51 @@ update msg model =
                 _ =
                     Debug.log "Switch view" model
             in
-                { model | view = view, remember = False } ! []
+                ( { model | view = view, remember = False }, Cmd.none, Nothing )
 
         SetUsername username ->
-            { model | username = username } ! []
+            ( { model | username = username }, Cmd.none, Nothing )
 
         SetPassword password ->
-            { model | password = password } ! []
+            ( { model | password = password }, Cmd.none, Nothing )
 
         ToggleRemember ->
-            { model | remember = not model.remember } ! []
+            ( { model | remember = not model.remember }, Cmd.none, Nothing )
 
         ClickLogIn ->
             let
                 _ =
                     Debug.log "ClickLogIn" model
             in
-                model ! [ postUserCmd model loginUrl ]
+                ( model, postUserCmd model loginUrl, Nothing )
 
         ClickRegister ->
             let
                 _ =
                     Debug.log "ClickRegister" model
             in
-                model ! [ postUserCmd model registerUrl ]
+                ( model, postUserCmd model registerUrl, Nothing )
 
         ClickLogOut ->
             let
                 _ =
                     Debug.log "ClickLogOut" model
             in
-                Auth.Models.init ! [ removeToken model.token ]
+                ( Auth.Models.init, removeToken model.token, Nothing )
 
         HttpError _ ->
             let
                 _ =
                     Debug.log "HttpError" model
             in
-                model ! []
+                ( model, Cmd.none, Nothing )
 
         AuthError error ->
             let
                 _ =
                     Debug.log "AuthError" error
             in
-                model ! []
+                ( model, Cmd.none, Just <| Alert <| toString error )
 
         GetTokenSuccess token ->
             let
@@ -68,13 +68,15 @@ update msg model =
                 decodedToken =
                     decodeTokenPayload token
             in
-                { model
+                ( { model
                     | token = token
                     , password = ""
                     , iat = decodedToken.iat
                     , exp = decodedToken.exp
-                }
-                    ! [ saveToken token ]
+                  }
+                , saveToken token
+                , Nothing
+                )
 
         LoadToken token ->
             let
@@ -84,10 +86,12 @@ update msg model =
                 decodedToken =
                     decodeTokenPayload token
             in
-                { model
+                ( { model
                     | token = token
                     , username = decodedToken.username
                     , iat = decodedToken.iat
                     , exp = decodedToken.exp
-                }
-                    ! []
+                  }
+                , Cmd.none
+                , Nothing
+                )

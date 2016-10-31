@@ -16,3 +16,7 @@ type Msg
     | AuthError Http.Error
     | GetTokenSuccess String
     | LoadToken String
+
+
+type OutMsg
+    = Alert String
