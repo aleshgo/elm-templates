@@ -10,43 +10,47 @@ type Views
     | Login
 
 
-type alias Model =
-    { username : String
-    , password : String
-    , remember : Bool
-    , token : String
-    , iat : Int
-    , exp : Int
-    , view : Views
-    }
-
-
-init : Model
-init =
-    Model "" "" False "" 0 0 Login
-
-
-
--- TokenPayload Decoder
-
-
 type alias Token =
     String
 
 
 type alias TokenPayload =
     { username : String
-    , iat : Int
-    , exp : Int
+    , iat : Float
+    , exp : Float
     }
+
+
+type alias Model =
+    { username : String
+    , password : String
+    , remember : Bool
+    , token : Maybe Token
+    , tokenPayload : Maybe TokenPayload
+    , view : Views
+    }
+
+
+initTokenPayload : TokenPayload
+initTokenPayload =
+    TokenPayload "" 0.0 0.0
+
+
+init : Model
+init =
+    Model "" "" False Nothing Nothing Login
+
+
+
+-- TokenPayload Decoder
 
 
 tokenPayloadDecoder : Decode.Decoder TokenPayload
 tokenPayloadDecoder =
     Decode.object3 TokenPayload
         ("username" := Decode.string)
-        ("iat" := Decode.int)
-        ("exp" := Decode.int)
+        ("iat" := Decode.float)
+        ("exp" := Decode.float)
 
 
 fixBase64Length : String -> Result String String
@@ -88,25 +92,25 @@ base64Decode encodedString =
                 ""
 
 
-decodeTokenPayloadString : String -> TokenPayload
+decodeTokenPayloadString : String -> Maybe TokenPayload
 decodeTokenPayloadString payload =
     case decodeString tokenPayloadDecoder payload of
         Ok payload ->
-            payload
+            Just payload
 
         Err error ->
             let
                 _ =
                     Debug.log "decodeTokenPayloadString: " error
             in
-                TokenPayload "" 0 0
+                Nothing
 
 
-decodeTokenPayload : Token -> TokenPayload
+decodeTokenPayload : Token -> Maybe TokenPayload
 decodeTokenPayload token =
     case List.head (String.split "." token) of
         Just encodedPayload ->
             decodeTokenPayloadString <| base64Decode encodedPayload
 
         Nothing ->
-            TokenPayload "" 0 0
+            Nothing

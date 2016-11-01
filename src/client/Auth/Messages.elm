@@ -13,7 +13,6 @@ type Msg
     | SetPassword String
     | ToggleRemember
     | HttpError Http.Error
-    | AuthError Http.Error
     | GetTokenSuccess String
     | LoadToken String
 

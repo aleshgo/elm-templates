@@ -56,4 +56,4 @@ postUser model url =
 
 postUserCmd : Model -> String -> Cmd Msg
 postUserCmd model url =
-    Task.perform AuthError GetTokenSuccess <| postUser model url
+    Task.perform HttpError GetTokenSuccess <| postUser model url

@@ -26,53 +26,26 @@ update msg model =
             ( { model | remember = not model.remember }, Cmd.none, Nothing )
 
         ClickLogIn ->
-            let
-                _ =
-                    Debug.log "ClickLogIn" model
-            in
-                ( model, postUserCmd model loginUrl, Nothing )
+            ( model, postUserCmd model loginUrl, Nothing )
 
         ClickRegister ->
-            let
-                _ =
-                    Debug.log "ClickRegister" model
-            in
-                ( model, postUserCmd model registerUrl, Nothing )
+            ( model, postUserCmd model registerUrl, Nothing )
 
         ClickLogOut ->
-            let
-                _ =
-                    Debug.log "ClickLogOut" model
-            in
-                ( Auth.Models.init, removeToken model.token, Nothing )
+            ( Auth.Models.init, removeToken "", Nothing )
 
-        HttpError _ ->
-            let
-                _ =
-                    Debug.log "HttpError" model
-            in
-                ( model, Cmd.none, Nothing )
-
-        AuthError error ->
-            let
-                _ =
-                    Debug.log "AuthError" error
-            in
-                ( model, Cmd.none, Just <| Alert <| toString error )
+        HttpError error ->
+            ( model, Cmd.none, Just <| Alert <| toString error )
 
         GetTokenSuccess token ->
             let
                 _ =
                     Debug.log "GetTokenSuccess" token
-
-                decodedToken =
-                    decodeTokenPayload token
             in
                 ( { model
-                    | token = token
+                    | token = Just token
                     , password = ""
-                    , iat = decodedToken.iat
-                    , exp = decodedToken.exp
+                    , tokenPayload = decodeTokenPayload token
                   }
                 , saveToken token
                 , Nothing
@@ -82,15 +55,14 @@ update msg model =
             let
                 _ =
                     Debug.log "LoadToken" token
-
-                decodedToken =
-                    decodeTokenPayload token
             in
                 ( { model
-                    | token = token
-                    , username = decodedToken.username
-                    , iat = decodedToken.iat
-                    , exp = decodedToken.exp
+                    | token =
+                        if token == "" then
+                            Nothing
+                        else
+                            Just token
+                    , tokenPayload = decodeTokenPayload token
                   }
                 , Cmd.none
                 , Nothing
