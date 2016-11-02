@@ -34,13 +34,58 @@ view model =
 
                     Just tokenPayload ->
                         tokenPayload
+
+            tokenTest =
+                case model.tokenTest of
+                    Nothing ->
+                        False
+
+                    Just token ->
+                        True
+
+            tokenTestResult =
+                case model.tokenTest of
+                    Nothing ->
+                        ""
+
+                    Just token ->
+                        case token of
+                            True ->
+                                "Successful"
+
+                            False ->
+                                "Unsuccessful"
+
+            tokenLeftTime =
+                round ((tokenPayload.exp - model.time) / 1000)
+
+            tokenValid =
+                tokenLeftTime > 0
            in
             if loggedIn then
                 div []
                     [ div [] [ text <| "Hello: " ++ tokenPayload.username ]
                     , div [] [ text <| "Token iat: " ++ toString (fromTime tokenPayload.iat) ]
                     , div [] [ text <| "Token exp: " ++ toString (fromTime tokenPayload.exp) ]
+                    , div [] [ text <| "Current time: " ++ toString (fromTime model.time) ]
+                    , div []
+                        [ text <|
+                            "Token left time, sec: "
+                                ++ toString
+                                    (if tokenLeftTime > 0 then
+                                        tokenLeftTime
+                                     else
+                                        0
+                                    )
+                        ]
+                    , div [] [ text <| "Token valid: " ++ toString tokenValid ]
                     , div [] [ button [ onClick <| AuthMsg Auth.Messages.ClickLogOut ] [ text "LogOut" ] ]
+                    , div [] [ button [ onClick <| ClickTokenTest ] [ text "TokenTest" ] ]
+                    , (if tokenTest then
+                        div [] [ text ("Token test result: " ++ tokenTestResult) ]
+                       else
+                        div [] []
+                      )
                     ]
             else
                 Html.App.map AuthMsg (authBox model.auth)

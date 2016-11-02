@@ -61,7 +61,8 @@ module.exports = function(router) {
   });
 
   router.get('/sessions/test', isAuthenticated(file), function(req, res) {
-    return res.ok();
+    const token = req.query.token || req.headers.token || req.params.token;
+    return res.ok({ token });
   });
 
 }

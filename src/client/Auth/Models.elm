@@ -21,6 +21,12 @@ type alias TokenPayload =
     }
 
 
+type alias TokenStorage =
+    { value : String
+    , remember : Bool
+    }
+
+
 type alias Model =
     { username : String
     , password : String
@@ -75,21 +81,13 @@ base64Decode encodedString =
         Ok fixedEncodedString ->
             case Base64.decode fixedEncodedString of
                 Ok payload ->
-                    Debug.log "Base64.decode: " payload
+                    payload
 
                 Err error ->
-                    let
-                        _ =
-                            Debug.log "Base64.decode error: " error
-                    in
-                        ""
+                    ""
 
         Err error ->
-            let
-                _ =
-                    Debug.log "fixBase64Length error: " error
-            in
-                ""
+            ""
 
 
 decodeTokenPayloadString : String -> Maybe TokenPayload
@@ -99,11 +97,7 @@ decodeTokenPayloadString payload =
             Just payload
 
         Err error ->
-            let
-                _ =
-                    Debug.log "decodeTokenPayloadString: " error
-            in
-                Nothing
+            Nothing
 
 
 decodeTokenPayload : Token -> Maybe TokenPayload
