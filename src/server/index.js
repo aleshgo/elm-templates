@@ -52,7 +52,6 @@ const indexHtml = `
       <link rel="icon" type="image/x-icon" href="/favicon.ico">
     </head>
     <body>
-      <div id="main"></div>
       <script src="/dist/main.js"></script>
     </body>
   </html>

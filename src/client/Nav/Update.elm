@@ -9,14 +9,12 @@ import Nav.Parser exposing (..)
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
 urlUpdate result model =
-    case result of
+    case Debug.log "result" result of
         Err _ ->
             ( model, Navigation.modifyUrl (toPath model.page) )
 
         Ok page ->
-            case page of
-                _ ->
-                    { model
-                        | page = page
-                    }
-                        ! []
+            if page == Home && not (tokenValid model) then
+                ( { model | page = Login }, Navigation.modifyUrl (toPath Login) )
+            else
+                { model | page = page } ! []

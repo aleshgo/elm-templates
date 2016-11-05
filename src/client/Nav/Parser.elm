@@ -12,6 +12,12 @@ toPath page =
         Home ->
             "/"
 
+        SignUp ->
+            "/signup"
+
+        Login ->
+            "/login"
+
 
 urlParser : Navigation.Parser (Result String Page)
 urlParser =
@@ -29,4 +35,6 @@ pageParser : Parser (Page -> a) a
 pageParser =
     oneOf
         [ format Home (s "")
+        , format SignUp (s "signup")
+        , format Login (s "login")
         ]

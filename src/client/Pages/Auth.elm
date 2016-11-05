@@ -1,22 +1,27 @@
-module Auth.View exposing (..)
+module Pages.Auth exposing (..)
 
+import Models exposing (Model)
 import Html exposing (Html, div, text, button, h3, input, label)
 import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (class, type', placeholder)
-import Auth.Models exposing (Model, Views(..))
-import Auth.Messages exposing (Msg(..))
+import Messages exposing (Msg(..))
+import Date exposing (fromTime)
+import Nav.Models exposing (Page(..))
 
 
-authBox : Model -> Html Msg
-authBox model =
+authPage : Model -> Html Msg
+authPage model =
     let
         authHeader =
-            case model.view of
+            case model.page of
                 Login ->
                     text "Log In"
 
-                Register ->
-                    text "Register"
+                SignUp ->
+                    text "Sign Up"
+
+                _ ->
+                    text ""
 
         authInput i t p =
             input [ class "width-full height-40 font-14 mt2 px1", placeholder p, type' t, onInput i ] []
@@ -25,27 +30,33 @@ authBox model =
             button [ class "flex-auto rounded border-none bg-mariner white mx1", onClick c ] [ text t ]
 
         authCheckbox c t =
-            case model.view of
+            case model.page of
                 Login ->
                     label []
                         [ input [ class "mt2", type' "checkbox", onClick c ] []
                         , text t
                         ]
 
-                Register ->
+                SignUp ->
+                    text ""
+
+                _ ->
                     text ""
 
         authLinks =
-            case model.view of
+            case model.page of
                 Login ->
-                    [ authButton (ToView Register) "Create an account"
+                    [ authButton (GoToPage SignUp) "Create an account"
                     , authButton ClickLogIn "Login"
                     ]
 
-                Register ->
-                    [ authButton (ToView Login) "Log in to your account"
-                    , authButton ClickRegister "Create"
+                SignUp ->
+                    [ authButton (GoToPage Login) "Log in to your account"
+                    , authButton ClickSignUp "Create"
                     ]
+
+                _ ->
+                    []
     in
         div [ class "bg-gallery flex justify-center items-center height-full" ]
             [ div [ class "flex flex-column rounded-top width-300 p2 box-shadow bg-white" ]

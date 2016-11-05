@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model, initialModel)
+import Models exposing (Model, ModelStorage, initModel)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
 import View exposing (view)
@@ -9,16 +9,22 @@ import Navigation
 import Nav.Models exposing (Page(..))
 import Nav.Parser exposing (..)
 import Nav.Update exposing (urlUpdate)
+import Time exposing (Time)
 
 
-init : Result String Page -> ( Model, Cmd Msg )
-init result =
-    urlUpdate result initialModel
+type alias Flags =
+    { modelStorage : Maybe ModelStorage
+    , time : Time
+    }
 
 
-main : Program Never
+init : Flags -> Result String Page -> ( Model, Cmd Msg )
+init flags result =
+    urlUpdate result (initModel flags.modelStorage flags.time)
+
+
 main =
-    Navigation.program urlParser
+    Navigation.programWithFlags urlParser
         { init = init
         , view = view
         , update = update

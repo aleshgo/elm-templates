@@ -6,22 +6,25 @@ require('./style.css');
 require('./Alert/style.css');
 
 var Elm = require('./Main.elm');
-var mountNode = document.getElementById('main');
 
-var app = Elm.Main.embed(mountNode);
+var storedModelStorage = localStorage.getItem('MODEL') || sessionStorage.getItem('MODEL') || null;
+var modelStorage = storedModelStorage ? JSON.parse(storedModelStorage) : null;
 
-app.ports.loadToken.send(localStorage.getItem('TOKEN') || sessionStorage.getItem('TOKEN') || "");
+var app = Elm.Main.fullscreen({ modelStorage : modelStorage, time : Date.now()});
 
-app.ports.saveToken.subscribe(function(tokenStorage) {
-    if (tokenStorage.remember) {
-        localStorage.setItem('TOKEN', tokenStorage.value);
+app.ports.saveModel.subscribe(function(modelStorage) {
+    localStorage.removeItem('MODEL');
+    sessionStorage.removeItem('MODEL');
+
+    if (modelStorage.remember) {
+       localStorage.setItem('MODEL', JSON.stringify(modelStorage));
     } else {
-        sessionStorage.setItem('TOKEN', tokenStorage.value);
+       sessionStorage.setItem('MODEL', JSON.stringify(modelStorage));
     }
+
 });
 
-app.ports.removeToken.subscribe(function() {
-    localStorage.removeItem('TOKEN');
-    sessionStorage.removeItem('TOKEN');
+app.ports.removeModel.subscribe(function() {
+    localStorage.removeItem('MODEL');
+    sessionStorage.removeItem('MODEL');
 });
-

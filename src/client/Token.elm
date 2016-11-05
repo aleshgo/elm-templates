@@ -1,13 +1,8 @@
-module Auth.Models exposing (..)
+module Token exposing (..)
 
 import Json.Decode as Decode exposing (decodeString, (:=))
 import String
 import Base64
-
-
-type Views
-    = Register
-    | Login
 
 
 type alias Token =
@@ -21,30 +16,9 @@ type alias TokenPayload =
     }
 
 
-type alias TokenStorage =
-    { value : String
-    , remember : Bool
-    }
-
-
-type alias Model =
-    { username : String
-    , password : String
-    , remember : Bool
-    , token : Maybe Token
-    , tokenPayload : Maybe TokenPayload
-    , view : Views
-    }
-
-
 initTokenPayload : TokenPayload
 initTokenPayload =
     TokenPayload "" 0.0 0.0
-
-
-init : Model
-init =
-    Model "" "" False Nothing Nothing Login
 
 
 
