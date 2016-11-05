@@ -79,7 +79,7 @@ view model =
                                     )
                         ]
                     , div [] [ text <| "Token valid: " ++ toString tokenValid ]
-                    , div [] [ button [ onClick <| AuthMsg Auth.Messages.ClickLogOut ] [ text "LogOut" ] ]
+                      --, div [] [ button [ onClick <| AuthMsg Auth.Messages.ClickLogOut ] [ text "LogOut" ] ]
                     , div [] [ button [ onClick <| ClickTokenTest ] [ text "TokenTest" ] ]
                     , (if tokenTest then
                         div [] [ text ("Token test result: " ++ tokenTestResult) ]
@@ -88,6 +88,7 @@ view model =
                       )
                     ]
             else
-                Html.App.map AuthMsg (authBox model.auth)
+                --Html.App.map AuthMsg (authBox model.auth)
+                div [] []
           )
         ]
