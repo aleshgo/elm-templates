@@ -7,6 +7,7 @@ import Html.Attributes exposing (class, type', placeholder)
 import Messages exposing (Msg(..))
 import Date exposing (fromTime)
 import Nav.Models exposing (Page(..))
+import I18n.LocaleData exposing (translate, TranslationId(..))
 
 
 authPage : Model -> Html Msg
@@ -15,10 +16,10 @@ authPage model =
         authHeader =
             case model.page of
                 Login ->
-                    text "Log In"
+                    text <| translate model.locale LoginHeader
 
                 SignUp ->
-                    text "Sign Up"
+                    text <| translate model.locale SignUpHeader
 
                 _ ->
                     text ""
@@ -46,13 +47,13 @@ authPage model =
         authLinks =
             case model.page of
                 Login ->
-                    [ authButton (GoToPage SignUp) "Create an account"
-                    , authButton ClickLogIn "Login"
+                    [ authButton (GoToPage SignUp) (translate model.locale ToSignUpButton)
+                    , authButton ClickLogIn (translate model.locale LoginButton)
                     ]
 
                 SignUp ->
-                    [ authButton (GoToPage Login) "Log in to your account"
-                    , authButton ClickSignUp "Create"
+                    [ authButton (GoToPage Login) (translate model.locale ToLoginButton)
+                    , authButton ClickSignUp (translate model.locale SignUpButton)
                     ]
 
                 _ ->
@@ -61,9 +62,9 @@ authPage model =
         div [ class "bg-gallery flex justify-center items-center height-full" ]
             [ div [ class "flex flex-column rounded-top width-300 p2 box-shadow bg-white" ]
                 [ div [ class "width-full bg-mariner white" ] [ h3 [ class "center" ] [ authHeader ] ]
-                , authInput SetUsername "text" "Username"
-                , authInput SetPassword "password" "Password"
-                , authCheckbox ToggleRemember "Remember a token"
+                , authInput SetUsername "text" (translate model.locale UsernameInput)
+                , authInput SetPassword "password" (translate model.locale PasswordInput)
+                , authCheckbox ToggleRemember (translate model.locale RememberCheckbox)
                 , div [ class "flex mt3 mb1 height-30 width-full" ] (authLinks)
                 ]
             ]

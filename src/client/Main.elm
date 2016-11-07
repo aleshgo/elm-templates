@@ -15,12 +15,13 @@ import Time exposing (Time)
 type alias Flags =
     { modelStorage : Maybe ModelStorage
     , time : Time
+    , language : String
     }
 
 
 init : Flags -> Result String Page -> ( Model, Cmd Msg )
 init flags result =
-    urlUpdate result (initModel flags.modelStorage flags.time)
+    urlUpdate result (initModel flags.modelStorage flags.time flags.language)
 
 
 main =

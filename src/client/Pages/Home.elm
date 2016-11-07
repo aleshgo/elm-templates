@@ -6,6 +6,8 @@ import Messages exposing (Msg(..))
 import Date exposing (fromTime)
 import Token exposing (initTokenPayload)
 import Html.Events exposing (onClick)
+import I18n.Locale as Locale
+import I18n.LocaleData exposing (translate, TranslationId(..))
 
 
 homePage : Model -> Html Msg
@@ -35,26 +37,23 @@ homePage model =
                 Just token ->
                     case token of
                         True ->
-                            "Successful"
+                            (translate model.locale Successful)
 
                         False ->
-                            "Unsuccessful"
+                            (translate model.locale Unsuccessful)
      in
         div []
-            [ div [] [ text <| "Hello: " ++ tokenPayload.username ]
-            , div [] [ text <| "Token iat: " ++ toString (fromTime tokenPayload.iat) ]
-            , div [] [ text <| "Token exp: " ++ toString (fromTime tokenPayload.exp) ]
-            , div [] [ text <| "Current time: " ++ toString (fromTime model.time) ]
-            , div []
-                [ text <|
-                    "Token left time, sec: "
-                        ++ toString (tokenLeftTime model)
-                ]
-            , div [] [ text <| "Token valid: " ++ toString (tokenValid model) ]
-            , div [] [ button [ onClick <| ClickLogOut ] [ text "LogOut" ] ]
-            , div [] [ button [ onClick <| ClickTokenTest ] [ text "TokenTest" ] ]
+            [ div [] [ text <| (translate model.locale Hello) ++ tokenPayload.username ]
+            , div [] [ text <| (translate model.locale TokenIat) ++ toString (fromTime tokenPayload.iat) ]
+            , div [] [ text <| (translate model.locale TokenExp) ++ toString (fromTime tokenPayload.exp) ]
+            , div [] [ text <| (translate model.locale CurrentTime) ++ toString (fromTime model.time) ]
+            , div [] [ text <| (translate model.locale TokenLeftTime) ++ toString (tokenLeftTime model) ]
+            , div [] [ text <| (translate model.locale TokenValid) ++ toString (tokenValid model) ]
+            , div [] [ text <| (translate model.locale LocaleText) ++ (Locale.toName model.locale) ]
+            , div [] [ button [ onClick <| ClickLogOut ] [ text (translate model.locale LogOutButton) ] ]
+            , div [] [ button [ onClick <| ClickTokenTest ] [ text (translate model.locale TokenTestButton) ] ]
             , (if tokenTest then
-                div [] [ text ("Token test result: " ++ tokenTestResult) ]
+                div [] [ text ((translate model.locale TokenTestResult) ++ tokenTestResult) ]
                else
                 div [] []
               )
