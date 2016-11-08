@@ -8,6 +8,7 @@ import Messages exposing (Msg(..))
 import Date exposing (fromTime)
 import Nav.Models exposing (Page(..))
 import I18n.LocaleData exposing (translate, TranslationId(..))
+import UI.LocaleSwitcher exposing (localeSwitcher)
 
 
 authPage : Model -> Html Msg
@@ -66,5 +67,6 @@ authPage model =
                 , authInput SetPassword "password" (translate model.locale PasswordInput)
                 , authCheckbox ToggleRemember (translate model.locale RememberCheckbox)
                 , div [ class "flex mt3 mb1 height-30 width-full" ] (authLinks)
+                , div [ class "absolute top-0 left-0" ] [ localeSwitcher model ]
                 ]
             ]

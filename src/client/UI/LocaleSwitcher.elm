@@ -11,7 +11,7 @@ import I18n.Locale as Locale
 localeSwitcher : Model -> Html Msg
 localeSwitcher model =
     div []
-        [ select [ onSelect (SaveBrowserLocale) ]
+        [ select [ onSelect (SwitchLocale) ]
             (let
                 option =
                     (localeSwitcherOption model)

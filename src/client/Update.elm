@@ -13,6 +13,7 @@ import Nav.Models exposing (Page(..))
 import Nav.Parser exposing (toPath)
 import Commands exposing (postUserCmd, loginUrl, signupUrl, tokenTestCmd, tokenTestUrl)
 import Nav.Models exposing (Page(..))
+import I18n.Locale as Locale
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -56,7 +57,11 @@ update msg model =
             ( model, postUserCmd model signupUrl )
 
         ClickLogOut ->
-            ( Models.initialModel, Cmd.batch [ removeModel "", Navigation.newUrl (toPath Login) ] )
+            let
+                newModel =
+                    Models.initialModel
+            in
+                ( { newModel | locale = model.locale }, Cmd.batch [ removeModel "", Navigation.newUrl (toPath Login) ] )
 
         GoToPage page ->
             ( model, Navigation.newUrl (toPath page) )
@@ -73,3 +78,10 @@ update msg model =
                     }
             in
                 ( newModel, Cmd.batch [ saveModel <| toModelStorage newModel, Navigation.newUrl (toPath Home) ] )
+
+        SwitchLocale code ->
+            let
+                newModel =
+                    { model | locale = Locale.fromCode code }
+            in
+                ( newModel, saveModel <| toModelStorage newModel )

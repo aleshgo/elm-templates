@@ -10,7 +10,9 @@ var Elm = require('./Main.elm');
 var storedModelStorage = localStorage.getItem('MODEL') || sessionStorage.getItem('MODEL') || null;
 var modelStorage = storedModelStorage ? JSON.parse(storedModelStorage) : null;
 
-var app = Elm.Main.fullscreen({ modelStorage : modelStorage, time : Date.now(), language : navigator.language});
+var language = localStorage.getItem('LOCALE') || navigator.language;
+
+var app = Elm.Main.fullscreen({ modelStorage : modelStorage, time : Date.now(), language : language});
 
 app.ports.saveModel.subscribe(function(modelStorage) {
     localStorage.removeItem('MODEL');
@@ -22,6 +24,7 @@ app.ports.saveModel.subscribe(function(modelStorage) {
        sessionStorage.setItem('MODEL', JSON.stringify(modelStorage));
     }
 
+    localStorage.setItem('LOCALE', modelStorage.locale);
 });
 
 app.ports.removeModel.subscribe(function() {

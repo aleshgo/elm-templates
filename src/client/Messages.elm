@@ -21,3 +21,4 @@ type Msg
     | SetUsername String
     | SetPassword String
     | ToggleRemember
+    | SwitchLocale String
