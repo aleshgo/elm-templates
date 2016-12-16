@@ -1,8 +1,7 @@
 module View exposing (..)
 
 import Html exposing (Html, div, fieldset, form, label, text, h1, input, button, textarea)
-import Html.App
-import Html.Attributes exposing (class, type', name, value, checked)
+import Html.Attributes exposing (class, type_, name, value, checked)
 import Html.Events exposing (onClick, onInput)
 import Messages exposing (Msg(..))
 import Models exposing (..)
@@ -18,7 +17,7 @@ view model =
             [ h1 [ class "h1" ] [ text "Alert" ]
             , viewPanel model
             ]
-        , Html.App.map AlertMsg <| viewAlert model.alert
+        , Html.map AlertMsg <| viewAlert model.alert
         ]
 
 
@@ -27,7 +26,7 @@ viewPanel model =
     div [ class "bg-silver border border-gray rounded p2 flex flex-auto" ]
         [ div [ class "flex flex-column flex-auto p2 fit col-12" ]
             [ label [ class "label" ] [ text "Title" ]
-            , input [ class "input", type' "text", onInput SetNewAlertMessageTitle ] []
+            , input [ class "input", type_ "text", onInput SetNewAlertMessageTitle ] []
             , label [ class "label" ] [ text "Text" ]
             , textarea [ class "textarea", onInput SetNewAlertMessageText ] []
             , label [ class "label" ] [ text "Options" ]
@@ -36,7 +35,7 @@ viewPanel model =
                 , checkbox TogglePreventDuplicates "Prevent duplicates" (model.alert.options.preventDuplicates == True)
                 , checkbox ToggleProgressBar "Show progress bar" (model.alert.options.progressBar == True)
                 , checkbox ToggleCloseButton "Show close button" (model.alert.options.closeButton == True)
-                , input [ class "input", type' "text", onInput SetTimeOut, value <| toString model.alert.options.timeOut ] []
+                , input [ class "input", type_ "text", onInput SetTimeOut, value <| toString model.alert.options.timeOut ] []
                 ]
             , button [ class "mt2 btn btn-primary", onClick <| AlertMsg <| Alert.Messages.AddAlertMessage model.newAlertMessageType model.newAlertMessageTitle model.newAlertMessageText ] [ text "Show Alert" ]
             ]
@@ -75,11 +74,11 @@ alertPositionRadio model position =
 
 
 alertTypeRadio : Model -> AlertType -> Html Msg
-alertTypeRadio model type' =
+alertTypeRadio model type_ =
     radio "AlertType"
-        (SetNewAlertMessageType type')
-        (toString type')
-        (if model.newAlertMessageType == type' then
+        (SetNewAlertMessageType type_)
+        (toString type_)
+        (if model.newAlertMessageType == type_ then
             True
          else
             False
@@ -87,16 +86,16 @@ alertTypeRadio model type' =
 
 
 radio : String -> msg -> String -> Bool -> Html msg
-radio name' msg label' checked' =
+radio name_ msg label_ checked_ =
     label [ class "label" ]
-        [ input [ type' "radio", onClick msg, name name', checked checked' ] []
-        , text label'
+        [ input [ type_ "radio", onClick msg, name name_, checked checked_ ] []
+        , text label_
         ]
 
 
 checkbox : msg -> String -> Bool -> Html msg
-checkbox msg label' checked' =
+checkbox msg label_ checked_ =
     label [ class "label" ]
-        [ input [ type' "checkbox", onClick msg, checked checked' ] []
-        , text label'
+        [ input [ type_ "checkbox", onClick msg, checked checked_ ] []
+        , text label_
         ]

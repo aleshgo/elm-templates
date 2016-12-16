@@ -15,11 +15,11 @@ update msg model =
             in
                 { model | queue = queue, time = time } ! []
 
-        AddAlertMessage type' title text ->
+        AddAlertMessage type_ title text ->
             let
                 isDuplicate : AlertMessage -> Bool
                 isDuplicate m =
-                    m.title == title && m.text == text && m.type' == type'
+                    m.title == title && m.text == text && m.type_ == type_
 
                 duplicates : List AlertMessage
                 duplicates =
@@ -30,7 +30,7 @@ update msg model =
 
                 newAlertMessage : AlertMessage
                 newAlertMessage =
-                    AlertMessage model.time type' title text Idle
+                    AlertMessage model.time type_ title text Idle
 
                 queue : List AlertMessage
                 queue =

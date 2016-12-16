@@ -16,8 +16,8 @@ update msg model =
         SetNewAlertMessageText text ->
             { model | newAlertMessageText = text } ! []
 
-        SetNewAlertMessageType type' ->
-            { model | newAlertMessageType = type' } ! []
+        SetNewAlertMessageType type_ ->
+            { model | newAlertMessageType = type_ } ! []
 
         AlertMsg alertMsg ->
             let
