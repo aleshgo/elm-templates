@@ -27,8 +27,8 @@ type AlertStatus
 
 
 alertTypeToStyle : AlertType -> String
-alertTypeToStyle type' =
-    case type' of
+alertTypeToStyle type_ =
+    case type_ of
         Success ->
             "alert-success"
 
@@ -43,8 +43,8 @@ alertTypeToStyle type' =
 
 
 alertTypeToIcon : AlertType -> String
-alertTypeToIcon type' =
-    case type' of
+alertTypeToIcon type_ =
+    case type_ of
         Success ->
             "fa-check-circle-o"
 
@@ -88,7 +88,7 @@ alertPositionToStyle position =
 
 type alias AlertMessage =
     { id : Float
-    , type' : AlertType
+    , type_ : AlertType
     , title : String
     , text : String
     , status : AlertStatus

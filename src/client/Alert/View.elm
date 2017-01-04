@@ -32,7 +32,7 @@ viewAlertMessage model message =
     div
         [ class <|
             "relative flex items-center alert "
-                ++ (alertTypeToStyle message.type')
+                ++ (alertTypeToStyle message.type_)
                 ++ (if message.status == Hovered then
                         " alert-hovered"
                     else
@@ -49,7 +49,7 @@ viewAlertMessage model message =
         , onMouseLeave (MouseLeaveAlertMessage message.id)
         , onClick (MouseClickAlertMessage message.id)
         ]
-        [ div [ class "alert-icon" ] [ i [ class <| "fa " ++ (alertTypeToIcon message.type') ] [] ]
+        [ div [ class "alert-icon" ] [ i [ class <| "fa " ++ (alertTypeToIcon message.type_) ] [] ]
         , div [ class "m1" ]
             [ div [ class "alert-title" ] [ text message.title ]
             , div [ class "alert-text", property "innerHTML" <| string message.text ] []

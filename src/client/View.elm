@@ -1,7 +1,7 @@
 module View exposing (..)
 
 import Html exposing (Html, div, text)
-import Html.App
+import Html
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
@@ -14,7 +14,7 @@ import Pages.Home exposing (homePage)
 view : Model -> Html Msg
 view model =
     div []
-        [ Html.App.map AlertMsg <| viewAlert model.alert
+        [ Html.map AlertMsg <| viewAlert model.alert
         , viewPage model
         ]
 

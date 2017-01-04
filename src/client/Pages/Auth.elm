@@ -3,7 +3,7 @@ module Pages.Auth exposing (..)
 import Models exposing (Model)
 import Html exposing (Html, div, text, button, h3, input, label)
 import Html.Events exposing (onClick, onInput)
-import Html.Attributes exposing (class, type', placeholder)
+import Html.Attributes exposing (class, type_, placeholder)
 import Messages exposing (Msg(..))
 import Date exposing (fromTime)
 import Nav.Models exposing (Page(..))
@@ -26,7 +26,7 @@ authPage model =
                     text ""
 
         authInput i t p =
-            input [ class "width-full height-40 font-14 mt2 px1", placeholder p, type' t, onInput i ] []
+            input [ class "width-full height-40 font-14 mt2 px1", placeholder p, type_ t, onInput i ] []
 
         authButton c t =
             button [ class "flex-auto rounded border-none bg-mariner white mx1", onClick c ] [ text t ]
@@ -35,7 +35,7 @@ authPage model =
             case model.page of
                 Login ->
                     label []
-                        [ input [ class "mt2", type' "checkbox", onClick c ] []
+                        [ input [ class "mt2", type_ "checkbox", onClick c ] []
                         , text t
                         ]
 
