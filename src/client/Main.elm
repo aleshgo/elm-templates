@@ -8,20 +8,18 @@ import View exposing (view)
 import Navigation
 import Nav.Models exposing (Page(..))
 import Nav.Parser exposing (..)
-import Nav.Update exposing (urlUpdate)
+import Nav.Update exposing (pageUpdate)
 
 
-init : Result String Page -> ( Model, Cmd Msg )
-init result =
-    urlUpdate result initialModel
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
+   pageUpdate location initialModel
 
 
-main : Program Never
 main =
-    Navigation.program urlParser
+    Navigation.program UrlChange
         { init = init
         , view = view
         , update = update
-        , urlUpdate = urlUpdate
         , subscriptions = subscriptions
         }
