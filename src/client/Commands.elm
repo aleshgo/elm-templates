@@ -4,7 +4,7 @@ import Models exposing (Model)
 import Task exposing (Task)
 import Http
 import Messages exposing (Msg(..))
-import Json.Decode as Decode exposing (Decoder, (:=))
+import Json.Decode as Decode exposing (Decoder, field)
 import Json.Encode as Encode
 
 
@@ -40,54 +40,44 @@ userEncoder model =
 
 tokenDecoder : Decoder String
 tokenDecoder =
-    "token" := Decode.string
+    field "token" Decode.string
 
 
 
 -- POST signup / login request
 
-
-postUser : Model -> String -> Task Http.Error String
+postUser : Model -> String -> Http.Request String
 postUser model url =
-    { verb = "POST"
-    , headers = [ ( "Content-Type", "application/json" ) ]
-    , url = url
-    , body = Http.string <| Encode.encode 0 <| userEncoder model
-    }
-        |> Http.send Http.defaultSettings
-        |> Http.fromJson tokenDecoder
+    Http.request
+        { method = "POST"
+        , headers = []
+        , timeout = Nothing
+        , withCredentials = False
+        , url = url
+        , body = userEncoder model |> Http.jsonBody
+        , expect = Http.expectJson tokenDecoder
+        }
 
 
-postUserCmd : Model -> String -> Cmd Msg
-postUserCmd model url =
-    Task.perform AuthError GetTokenSuccess <| postUser model url
+postUserRequest : Model -> String -> Cmd Msg
+postUserRequest model url =
+    postUser model url
+        |> Http.send UserRequest
 
 
-tokenTest : Model -> String -> Task Http.Error String
-tokenTest model url =
-    { verb = "GET"
-    , headers =
-        [ ( "token"
-          , case model.token of
-                Just token ->
-                    token
+tokenTest : Model -> Http.Request String
+tokenTest model =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "token" (model.token |> Maybe.withDefault "") ]
+        , timeout = Nothing
+        , withCredentials = False
+        , url = tokenTestUrl
+        , body =  Http.emptyBody
+        , expect = Http.expectJson tokenDecoder
+        }
 
-                Nothing ->
-                    ""
-          )
-        ]
-    , url = url
-    , body = Http.empty
-    }
-        |> Http.send Http.defaultSettings
-        |> Http.fromJson metaDecoder
-
-
-tokenTestCmd : Model -> String -> Cmd Msg
-tokenTestCmd model url =
-    Task.perform HttpError TokenTestSuccess <| tokenTest model url
-
-
-metaDecoder : Decoder String
-metaDecoder =
-    "token" := Decode.string
+tokenTestRequest : Model -> Cmd Msg
+tokenTestRequest model =
+ tokenTest model
+     |> Http.send TokenTestRequest

@@ -2,8 +2,7 @@ module Nav.Parser exposing (..)
 
 import Navigation
 import Nav.Models exposing (Page(..))
-import String
-import UrlParser exposing (Parser, (</>), format, int, oneOf, s, string)
+import UrlParser exposing ((</>), s, top)
 
 
 toPath : Page -> String
@@ -19,22 +18,10 @@ toPath page =
             "/login"
 
 
-urlParser : Navigation.Parser (Result String Page)
-urlParser =
-    Navigation.makeParser pathParser
-
-
-pathParser : Navigation.Location -> Result String Page
-pathParser location =
-    location.pathname
-        |> String.dropLeft 1
-        |> UrlParser.parse identity pageParser
-
-
-pageParser : Parser (Page -> a) a
+pageParser : UrlParser.Parser (Page -> a) a
 pageParser =
-    oneOf
-        [ format Home (s "")
-        , format SignUp (s "signup")
-        , format Login (s "login")
+    UrlParser.oneOf
+        [ UrlParser.map Home top
+        , UrlParser.map SignUp (s "signup")
+        , UrlParser.map Login (s "login")
         ]

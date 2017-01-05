@@ -8,7 +8,7 @@ import View exposing (view)
 import Navigation
 import Nav.Models exposing (Page(..))
 import Nav.Parser exposing (..)
-import Nav.Update exposing (urlUpdate)
+import Nav.Update exposing (pageUpdate)
 import Time exposing (Time)
 
 
@@ -19,16 +19,15 @@ type alias Flags =
     }
 
 
-init : Flags -> Result String Page -> ( Model, Cmd Msg )
+init : Flags -> Navigation.Location -> ( Model, Cmd Msg )
 init flags result =
-    urlUpdate result (initModel flags.modelStorage flags.time flags.language)
+    pageUpdate result (initModel flags.modelStorage flags.time flags.language)
 
 
 main =
-    Navigation.programWithFlags urlParser
+    Navigation.programWithFlags UrlChange
         { init = init
         , view = view
         , update = update
-        , urlUpdate = urlUpdate
         , subscriptions = subscriptions
         }

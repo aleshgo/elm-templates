@@ -1,6 +1,6 @@
 module Token exposing (..)
 
-import Json.Decode as Decode exposing (decodeString, (:=))
+import Json.Decode as Decode exposing (decodeString, field)
 import String
 import Base64
 
@@ -27,10 +27,10 @@ initTokenPayload =
 
 tokenPayloadDecoder : Decode.Decoder TokenPayload
 tokenPayloadDecoder =
-    Decode.object3 TokenPayload
-        ("username" := Decode.string)
-        ("iat" := Decode.float)
-        ("exp" := Decode.float)
+    Decode.map3 TokenPayload
+        (field "username" Decode.string)
+        (field "iat" Decode.float)
+        (field "exp" Decode.float)
 
 
 fixBase64Length : String -> Result String String
