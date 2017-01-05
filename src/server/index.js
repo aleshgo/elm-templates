@@ -50,6 +50,7 @@ const indexHtml = `
       <meta charset="utf-8" />
       <title>Elm template</title>
       <link rel="icon" type="image/x-icon" href="/favicon.ico">
+      <link rel="stylesheet" href="/font-awesome.min.css">
     </head>
     <body>
       <script src="/dist/main.js"></script>
