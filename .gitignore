@@ -1,5 +1,6 @@
 elm-stuff
 .env
+.idea
 node_modules
 static/dist/
 npm-debug.log
