@@ -1,5 +1,9 @@
 module Messages exposing (..)
 
+import Navigation
+
 
 type Msg
-    = NoOp
+    = GoHomePage
+    | GoToPage Int
+    | UrlChange Navigation.Location
