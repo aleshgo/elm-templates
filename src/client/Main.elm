@@ -13,6 +13,7 @@ init =
     ( initialModel, Cmd.none )
 
 
+main : Program Never Model Msg
 main =
     Html.program
         { init = init

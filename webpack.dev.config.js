@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
@@ -24,27 +24,22 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-hot!elm-webpack',
-      },
-      {
-        test: /\.(css|scss)$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
+        use: [
+          'elm-hot-loader',
+          'elm-webpack-loader?verbose=true&warn=false&debug=false'
         ]
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader',
-      },
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
+      }
     ],
 
     noParse: /\.elm$/,
