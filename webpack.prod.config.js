@@ -19,20 +19,21 @@ module.exports = {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
       }
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
     })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-hot!elm-webpack',
+        use: ['elm-webpack-loader']
       },
     ],
 
