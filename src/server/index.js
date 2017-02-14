@@ -8,6 +8,12 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
+
+if (process.env.NODE_ENV == null) {
+  process.env['NODE_ENV'] = 'development';
+}
+
+// If dev
 if (process.env.NODE_ENV === 'development') {
   const webpack = require('webpack');
   const webpackConfig = require ('../../webpack.dev.config.js');

@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
@@ -24,11 +24,14 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-hot!elm-webpack',
+        use: [
+          'elm-hot-loader',
+          'elm-webpack-loader?verbose=true&warn=false&debug=false'
+        ]
       },
     ],
 
