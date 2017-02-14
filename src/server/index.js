@@ -3,10 +3,13 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-
 const cors = require('cors');
+const renderIndex = require('./html').renderIndex;
+
+// Express
 const app = express();
 
+// Middlewares
 app.use(cors());
 
 if (process.env.NODE_ENV == null) {
@@ -27,29 +30,15 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use('/', express.static(path.join(__dirname, '../..', 'static')));
 
-app.get('/*', function(req, res) {
-  res.status(200).end(indexHtml);
-})
+app.get('/*', (req, res) =>
+  res.status(200).end(renderIndex())
+)
 
 process.env.PORT = process.env.PORT || 3000;
-const server = app.listen(process.env.PORT, function(err) {
+const server = app.listen(process.env.PORT, (err) => {
   if (err) {
     console.log(err);
     return;
   }
   console.log('server listening on port: %s, env: %s', process.env.PORT, process.env.NODE_ENV);
 });
-
-const indexHtml = `
-  <html>
-    <head>
-      <meta charset="utf-8" />
-      <title>Elm template</title>
-      <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    </head>
-    <body>
-      <div id="main"></div>
-      <script src="/dist/main.js"></script>
-    </body>
-  </html>
-`
