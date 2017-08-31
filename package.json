@@ -13,23 +13,23 @@
   "dependencies": {
     "ace-css": "^1.1.0",
     "base64url": "^2.0.0",
-    "body-parser": "^1.15.2",
-    "cors": "^2.8.1",
-    "css-loader": "^0.25.0",
-    "dotenv": "^2.0.0",
-    "elliptic": "^6.3.2",
-    "style-loader": "^0.13.1",
-    "express": "^4.14.0",
-    "joi": "^9.1.1",
-    "jsonfile": "^2.4.0",
-    "lodash": "^4.16.4",
-    "glob": "^7.1.1"
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "css-loader": "^0.28.7",
+    "dotenv": "^4.0.0",
+    "elliptic": "^6.4.0",
+    "express": "^4.15.4",
+    "glob": "^7.1.2",
+    "joi": "^10.6.0",
+    "jsonfile": "^3.0.1",
+    "lodash": "^4.17.4",
+    "style-loader": "^0.18.2"
   },
   "devDependencies": {
-    "elm-hot-loader": "^0.3.7",
-    "elm-webpack-loader": "^3.1.0",
-    "webpack": "^2.2.1",
-    "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.1"
+    "elm-hot-loader": "^0.5.4",
+    "elm-webpack-loader": "^4.3.1",
+    "webpack": "^3.5.5",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.18.2"
   }
 }
