@@ -4,3 +4,4 @@ elm-stuff
 node_modules
 static/dist/
 npm-debug.log
+yarn.lock
